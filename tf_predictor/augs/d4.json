@@ -1,0 +1,8 @@
+{
+"augs":["NO",
+		"ROT90",
+		"ROT180",
+		"ROT270",
+		"FLIP_UP",
+		"FLIP_LR"]
+} 

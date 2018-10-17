@@ -1,5 +1,10 @@
 import cv2
 import math
+import numpy as np
+
+class AugmentationNotFound(Exception):
+	def __init__(self, message):
+		self.message = message
 
 def cint(num):
 	return int(math.ceil(num))
@@ -22,5 +27,44 @@ def add_reflections(img,in_patch_size,out_patch_size):
 							right,
 							cv2.BORDER_REFLECT_101)
 
-def apply_aug(img,augs):
-	pass
+
+def rot90(img,k):
+	return np.rot90(img,k=k)
+
+def flip_up(img):
+	return np.flipud(img)
+
+def flip_lr(img):
+	return np.fliplr(img)
+
+def apply(aug,img):
+	if aug == "NO":
+		return img
+	elif aug == "ROT90":
+		return rot90(img,1)
+	elif aug == "ROT180":
+		return rot90(img,2)
+	elif aug == "ROT270":
+		return rot90(img,3)
+	elif aug == "FLIP_UD":
+		return flip_up(img)
+	elif aug == "FLIP_LR":
+		return flip_lr(img)
+	else:
+		raise AugmentationNotFound("%s is not a vallid augmentation!"%aug)
+
+def reverse(aug,img):
+	if aug == "NO":
+		return img
+	elif aug == "ROT90":
+		return rot90(img,-1)
+	elif aug == "ROT180":
+		return rot90(img,-2)
+	elif aug == "ROT270":
+		return rot90(img,-3)
+	elif aug == "FLIP_UD":
+		return flip_up(img)
+	elif aug == "FLIP_LR":
+		return flip_lr(img)
+	else:
+		raise AugmentationNotFound("%s is not a vallid augmentation!"%aug)
