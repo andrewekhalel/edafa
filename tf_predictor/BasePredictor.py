@@ -4,8 +4,9 @@ import cv2
 from .utils import *
 import numpy as np
 import json 
+from abc import ABC, abstractmethod
 
-class BasePredictor:
+class BasePredictor(ABC):
 	def __init__(self,in_patch_size,out_patch_size,augs_path,*args, **kwargs):		
 		self.in_patch_size = in_patch_size
 		self.out_patch_size = out_patch_size
@@ -14,15 +15,17 @@ class BasePredictor:
 		self.args = args
 		self.kwargs = kwargs
 		
-
+	@abstractmethod
 	def predict_patches(self,patches):
-		raise NotImplementedError('predict_patches() must be implemented')
+		pass
 
-	def normalize(self,img):
-		raise NotImplementedError('normalize() must be implemented')
+	@abstractmethod
+	def preprocess(self,img):
+		pass
 
+	@abstractmethod
 	def postprocess(self,pred):
-		raise NotImplementedError('postprocess() must be implemented')
+		pass
 
 	def apply_aug(self,img):
 		aug_patch = np.zeros((len(self.augs),*img.shape))
@@ -50,7 +53,7 @@ class BasePredictor:
 			output = np.zeros(img.shape)
 			times = np.zeros((O_H,O_W))
 
-			img = add_reflections(self.normalize(img),self.in_patch_size,self.out_patch_size)
+			img = add_reflections(self.preprocess(img),self.in_patch_size,self.out_patch_size)
 
 			padding = rint((self.out_patch_size - self.in_patch_size)/2.)
 
