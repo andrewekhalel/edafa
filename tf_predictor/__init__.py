@@ -1,1 +1,0 @@
-from .BasePredictor import BasePredictor
