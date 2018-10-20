@@ -1,5 +1,5 @@
 from unittest import TestCase
-from tf_predictor import BasePredictor
+from tta_predictor import BasePredictor
 import os
 
 class Child(BasePredictor):
