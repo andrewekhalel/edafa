@@ -6,12 +6,19 @@ class AugmentationNotFound(Exception):
 	def __init__(self, message):
 		self.message = message
 
+class MeanTypeNotFound(Exception):
+	def __init__(self, message):
+		self.message = message
+
 def cint(num):
 	return int(math.ceil(num))
 
+def rint(num):
+	return int(round(num))
+
 def add_reflections(img,in_patch_size,out_patch_size):
-	O_H = imgs.shape[0]
-	O_W = imgs.shape[1]
+	O_H = img.shape[0]
+	O_W = img.shape[1]
 	
 	padding = rint((out_patch_size - in_patch_size)/2.)
 
@@ -19,7 +26,8 @@ def add_reflections(img,in_patch_size,out_patch_size):
 	left = padding
 	right = rint(in_patch_size - (O_W % in_patch_size)) + padding
 	bottom = rint(in_patch_size - (O_H % in_patch_size)) + padding
-
+	if top ==0 or left ==0 or right ==0 or bottom==0:
+		return img
 	return cv2.copyMakeBorder(img,
 							top, 
 							bottom,
@@ -51,7 +59,7 @@ def apply(aug,img):
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
 	else:
-		raise AugmentationNotFound("%s is not a vallid augmentation!"%aug)
+		raise AugmentationNotFound("%s is not a valid augmentation!"%aug)
 
 def reverse(aug,img):
 	if aug == "NO":
@@ -67,4 +75,4 @@ def reverse(aug,img):
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
 	else:
-		raise AugmentationNotFound("%s is not a vallid augmentation!"%aug)
+		raise AugmentationNotFound("%s is not a valid augmentation!"%aug)

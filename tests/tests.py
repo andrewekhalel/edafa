@@ -21,7 +21,7 @@ class Tester(TestCase):
 		self.path = os.path.join(os.path.dirname(os.path.dirname(__file__)))
 
 	def test_pass_args_kwargs(self):
-		p = Child(128,64,os.path.join(self.path,"augs/d4.json"),0,1,a=0,b=1)
+		p = Child(128,64,1,os.path.join(self.path,"conf/rotates.json"),0,1,a=0,b=1)
 		self.assertTrue(p.args[0] == 0)
 		self.assertTrue(p.args[1] == 1)
 		self.assertTrue(p.in_patch_size == 128)
@@ -30,13 +30,11 @@ class Tester(TestCase):
 		self.assertTrue(p.kwargs['b'] == 1)
 
 	def test_pass_json_loading(self):
-		p = Child(128,128,os.path.join(self.path,"augs/d4.json"))
+		p = Child(128,128,1,os.path.join(self.path,"conf/rotates.json"))
 		self.assertTrue(p.augs == ["NO",
 									"ROT90",
 									"ROT180",
-									"ROT270",
-									"FLIP_UP",
-									"FLIP_LR"])
+									"ROT270"])
 
 if __name__ == '__main__':
     unittest.main()
