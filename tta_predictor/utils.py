@@ -2,6 +2,8 @@ import cv2
 import math
 import numpy as np
 
+EXTENSIONS = ['jpg','png','tif','tiff']
+
 class AugmentationNotFound(Exception):
 	def __init__(self, message):
 		self.message = message
@@ -20,7 +22,7 @@ def add_reflections(img,in_patch_size,out_patch_size):
 	O_H = img.shape[0]
 	O_W = img.shape[1]
 	
-	padding = rint((out_patch_size - in_patch_size)/2.)
+	padding = rint((in_patch_size - out_patch_size)/2.)
 
 	top = padding
 	left = padding

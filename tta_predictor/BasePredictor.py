@@ -52,7 +52,7 @@ class BasePredictor(ABC):
 
 	def predict_dir(self,in_path,out_path,overlap=0,extension='.png'):
 		for f in os.listdir(in_path):
-			if f.startswith('.'):
+			if f.split('.')[-1].lower() not in EXTENSIONS:
 				continue
 
 			if f.endswith('.tif') or f.endswith('.tiff'):
@@ -64,31 +64,29 @@ class BasePredictor(ABC):
 			if len(preprocessed.shape) == 4:
 				preprocessed = preprocessed[0,:,:,:]
 
-			O_H = preprocessed.shape[0]
-			O_W = preprocessed.shape[1]
 
 			output = np.zeros((*preprocessed.shape[:2],self.n_classes))
-			times = np.zeros((O_H,O_W))
+			times = np.zeros(preprocessed.shape[:2])
 
 			img = add_reflections(preprocessed,self.in_patch_size,self.out_patch_size)
 
-			padding = rint((self.out_patch_size - self.in_patch_size)/2.)
+			padding = rint((self.in_patch_size - self.out_patch_size)/2.)
 
 			delta = self.in_patch_size-overlap
-			for h in range(0,img.shape[0]-self.out_patch_size +1,delta):
-				for w in range(0,img.shape[1]-self.out_patch_size +1,delta):
-					in_patch = img[h:(h+self.out_patch_size),
-									w:(w+self.out_patch_size),
+			for h in range(0,img.shape[0]-self.in_patch_size +1,delta):
+				for w in range(0,img.shape[1]-self.in_patch_size +1,delta):
+					in_patch = img[h:(h+self.in_patch_size),
+									w:(w+self.in_patch_size),
 									:]
 					aug_patches = self.apply_aug(in_patch)
 					pred = self.predict_patches(aug_patches)
 					pred = self.reverse_aug(pred)
 
-					output[padding:(padding+self.in_patch_size),
-							padding:(padding+self.in_patch_size),
+					output[padding:(padding+self.out_patch_size),
+							padding:(padding+self.out_patch_size),
 							:] = pred
-					times[padding:(padding+self.in_patch_size),
-							padding:(padding+self.in_patch_size)] += 1
+					times[padding:(padding+self.out_patch_size),
+							padding:(padding+self.out_patch_size)] += 1
 					if overlap == 0:
 						assert np.sum(times) == times.shape[0]*times.shape[1]
 			out_filename = f.split('.')[0] + extension

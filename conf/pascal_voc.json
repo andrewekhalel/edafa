@@ -1,7 +1,6 @@
 {
 "augs":["NO",
-		"ROT90",
-		"ROT180",
-		"ROT270"],
+		"FLIP_UD",
+		"FLIP_LR"],
 "mean":"ARITHMETIC"
 } 
