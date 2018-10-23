@@ -147,8 +147,7 @@ class BasePredictor(ABC):
 							:] = pred
 					times[padding:(padding+self.out_patch_size),
 							padding:(padding+self.out_patch_size)] += 1
-					if overlap == 0:
-						assert np.sum(times) == times.shape[0]*times.shape[1]
+					
 			out_filename = f.split('.')[0] + extension
 			processed = self.postprocess(output/times[:,:,np.newaxis])
 			cv2.imwrite(os.path.join(out_path,out_filename),processed)
