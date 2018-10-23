@@ -45,16 +45,14 @@ p.predict_dir(in_dir,out_dir,overlap=0,extension='.png')
 ```
 ### Configuration file
 Configuration file is a json file containing two pieces of information
-1. Augmentations to apply (**augs**)
-Supported augmentations:
+1. Augmentations to apply (**augs**). Supported augmentations:
 	* **NO** : No augmentation
 	* **ROT90** : Rotate 90 degrees
 	* **ROT180** : Rotate 180 degrees
 	* **ROT270** : Rotate 270 degrees
 	* **FLIP_UD** : Flip upside-down
 	* **FLIP_LR** : Flip left-right
-2. Combination of the results (**mean**)
-Supported mean types:
+2. Combination of the results (**mean**). Supported mean types:
 	* **ARITHMETIC** : Arithmetic mean
 	* **GEOMETRIC** : Geometric mean
 
@@ -62,8 +60,8 @@ Example of a conf file
 ```json
 {
 "augs":["NO",
-		"FLIP_UD",
-		"FLIP_LR"],
+"FLIP_UD",
+"FLIP_LR"],
 "mean":"ARITHMETIC"
 }
 ```
