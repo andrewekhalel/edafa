@@ -7,36 +7,88 @@ import json
 from abc import ABC, abstractmethod
 
 class BasePredictor(ABC):
-	def __init__(self,in_patch_size,out_patch_size,n_classes,conf_path,*args, **kwargs):		
-		self.in_patch_size = in_patch_size
-		self.out_patch_size = out_patch_size
-		self.n_classes = n_classes
+	"""
+	An abstract class (wrapper for your model) to apply test time augmentation (TTA)
+	"""
+	def __init__(self,in_patch_size,channels,conf_path,out_patch_size=None):
+		""" 
+		Class constructor
+
+		:param in_patch_size: input patch size (assumes width = height)
+		:param channels: number of channels in your model's output (for example number of classes in segmentation)
+		:param conf_path: configuration file path
+		:param out_patch_size: output patch size in case of no padding (default = in_patch_size)
+		"""
+		self.in_patch_size = in_patch_size	
+		self.channels = channels
+		
 		with open(conf_path) as f:
 			loaded = json.load(f)
-			self.augs = loaded["augs"]
-			self.mean = loaded["mean"]
-		self.args = args
-		self.kwargs = kwargs
+			if "augs" in  loaded:
+				self.augs = loaded["augs"]
+			else:
+				self.augs = ["NO"]
+
+			if "mean" in loaded:
+				self.mean = loaded["mean"]
+			else:
+				self.mean = "ARITHMETIC"
+
+		if out_patch_size is None:
+			self.out_patch_size = self.in_patch_size
+		else:
+			self.out_patch_size = out_patch_size
 		
 	@abstractmethod
 	def predict_patches(self,patches):
+		"""
+		Virtual method uses your model to predict patches
+		:param patches: input patches to model for prediction
+
+		:return: prediction on these patches
+		"""
 		pass
 
 	@abstractmethod
 	def preprocess(self,img):
+		"""
+		Virtual method to preprocess image before passing to model (normalize, contrast enhancement, ...)
+		:param img: input image just after reading it
+
+		:returns: processed image
+		"""
 		pass
 
 	@abstractmethod
 	def postprocess(self,pred):
+		"""
+		Virtual method to postprocess image after model prediction (reverse normalization, clipping, ...)
+		:param pred: image predicted using model
+
+		:returns: processed image
+		"""
 		pass
 
 	def apply_aug(self,img):
+		"""
+		Apply augmentations to the supplied image
+		:param img: original image before augmentation
+		
+		:returns: a set of augmentations of original image
+		"""
 		aug_patch = np.zeros((len(self.augs),*img.shape))
 		for i,aug in enumerate(self.augs):
 			aug_patch[i] = apply(aug,img)
 		return aug_patch
 
 	def reverse_aug(self,aug_patch):
+		"""
+		Reverse augmentations applied and calculate their combined mean
+		:param aug_patch: set of prediction of the model to different augmentations
+		
+		:returns: single combined patch 
+		:raises MeanTypeNotFound: exception to indicate that specified mean is not recongized
+		"""
 		if self.mean == "ARITHMETIC":
 			mixed = np.zeros(aug_patch.shape[1:])
 			for i,aug in enumerate(self.augs):
@@ -51,6 +103,14 @@ class BasePredictor(ABC):
 			raise MeanTypeNotFound("%s is not a valid mean type! Currently supported types: GEOMETRIC, ARITHMETIC"%self.mean)
 
 	def predict_dir(self,in_path,out_path,overlap=0,extension='.png'):
+		"""
+		Predict all images in directory
+
+		:param in_path: directory where original images exist
+		:param out_path: directory where predictions should be saved
+		:param overlap: overlap size between patches in prediction (default = 0)
+		:param extension: extension of saved images (default = '.png')
+		"""
 		for f in os.listdir(in_path):
 			if f.split('.')[-1].lower() not in EXTENSIONS:
 				continue
@@ -65,7 +125,7 @@ class BasePredictor(ABC):
 				preprocessed = preprocessed[0,:,:,:]
 
 
-			output = np.zeros((*preprocessed.shape[:2],self.n_classes))
+			output = np.zeros((*preprocessed.shape[:2],self.channels))
 			times = np.zeros(preprocessed.shape[:2])
 
 			img = add_reflections(preprocessed,self.in_patch_size,self.out_patch_size)
