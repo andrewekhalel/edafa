@@ -33,7 +33,7 @@ setup(name='edafa',
 	author_email='andrewekhalel@gmail.com',
 	license='MIT',
 	packages=['edafa'],
-	test_suite='nose.collector',''
+	test_suite='nose.collector',
 	tests_require=['nose'],
 	install_requires=[
 	'numpy', 'tifffile', 'opencv-python' 

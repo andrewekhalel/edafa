@@ -4,7 +4,9 @@
 Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
 
 ### Installation
-PyPI pacakage will be avaialble soon
+```
+pip install edafa
+```
 
 ### Getting started
 The easiest way to get up and running is to follow this [notebook](https://github.com/andrewekhalel/tta_predictor/blob/master/examples/pascal_voc.ipynb) showing an example on using Edafa to improve segmentation score on PASCAL VOC dataset.
