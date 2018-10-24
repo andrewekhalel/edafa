@@ -1,7 +1,7 @@
 
-# TTA Predictor
+# edafa
 
-TTA Predictor is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
+edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
 
 ### Installation
 PyPI pacakage will be avaialble soon
