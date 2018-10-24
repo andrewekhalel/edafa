@@ -1,19 +1,19 @@
 
-# edafa
+# Edafa
 
-edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
+Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
 
 ### Installation
 PyPI pacakage will be avaialble soon
 
 ### Getting started
-The easiest way to get up and running is to follow this [notebook](https://github.com/andrewekhalel/tta_predictor/blob/master/examples/pascal_voc.ipynb) showing an example on using TTA Predictor to improve segmentation score on PASCAL VOC dataset.
+The easiest way to get up and running is to follow this [notebook](https://github.com/andrewekhalel/tta_predictor/blob/master/examples/pascal_voc.ipynb) showing an example on using Edafa to improve segmentation score on PASCAL VOC dataset.
 
-### How to use TTA Predictor
+### How to use Edafa
 The whole process can be done in 4 steps:
 1.  Import `BasePredictor` abstract class 
 ```python
-from tta_predictor import BasePredictor
+from edafa import BasePredictor
 ```
 2. Inherit `BasePredictor` to your own class and implement the main 3 functions 
 	* `preprocess(self,img)` :  Implement preprocessing needed after reading image from disk (e.g. normalization, .. )

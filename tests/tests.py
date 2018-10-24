@@ -1,5 +1,5 @@
 from unittest import TestCase
-from tta_predictor import BasePredictor
+from edafa import BasePredictor
 import os
 
 class Child(BasePredictor):
@@ -27,7 +27,7 @@ class Tester(TestCase):
 		"""
 		Test configuration loading
 		"""
-		p = Child(128,128,1,os.path.join(self.path,"conf/pascal_voc.json"))
+		p = Child(128,1,os.path.join(self.path,"conf/pascal_voc.json"))
 		self.assertTrue(p.augs == ["NO",
 									"FLIP_UD",
 									"FLIP_LR"])
