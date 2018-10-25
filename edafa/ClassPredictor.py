@@ -2,11 +2,8 @@ from .BasePredictor import BasePredictor
 import numpy as np
 
 class ClassPredictor(BasePredictor):
-	def __init__(self,in_patch_size,n_classes,conf_path):
+	def __init__(self,conf_path):
 		super().__init__(conf_path=conf_path)
-
-		self.in_patch_size = in_patch_size	
-		self.n_classes = n_classes
 
 	def reverse_aug(self,aug_patch):
 		"""

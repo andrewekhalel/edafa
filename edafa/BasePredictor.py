@@ -24,15 +24,15 @@ class BasePredictor(ABC):
 
 
 		
-	# @abstractmethod
-	# def predict_patches(self,patches):
-	# 	"""
-	# 	Virtual method uses your model to predict patches
-	# 	:param patches: input patches to model for prediction
+	@abstractmethod
+	def predict_patches(self,patches):
+		"""
+		Virtual method uses your model to predict patches
+		:param patches: input patches to model for prediction
 
-	# 	:return: prediction on these patches
-	# 	"""
-	# 	pass
+		:return: prediction on these patches
+		"""
+		pass
 
 	# @abstractmethod
 	# def preprocess(self,img):
