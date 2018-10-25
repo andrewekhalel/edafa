@@ -1,6 +1,7 @@
 from unittest import TestCase
 from edafa import BasePredictor
 import os
+from abc import abstractmethod
 
 class Child(BasePredictor):
 	"""
@@ -8,17 +9,14 @@ class Child(BasePredictor):
 	"""
 	def __init__(self,*args,**kwargs):
 		super().__init__(*args,**kwargs)
-
-	def preprocess(self,img):
+ 
+	def reverse_aug(self,aug_patch):
 		pass
 
-	def postprocess(self,pred):
+	def predict_images(self,imgs):
 		pass
 
-	def predict_patches(self,patches):
-		pass
-
-	def predict_single(self,patches):
+	def _predict_single(self,patches):
 		pass
 
 class Tester(TestCase):
@@ -30,7 +28,7 @@ class Tester(TestCase):
 		"""
 		Test configuration loading
 		"""
-		p = Child(128,1,os.path.join(self.path,"conf/pascal_voc.json"))
+		p = Child(os.path.join(self.path,"conf/pascal_voc.json"))
 		self.assertTrue(p.augs == ["NO",
 									"FLIP_UD",
 									"FLIP_LR"])
