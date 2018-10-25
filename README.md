@@ -1,7 +1,7 @@
 
 # Edafa
 
-Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
+Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, classification, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
 
 ### Installation
 ```
@@ -9,30 +9,22 @@ pip install edafa
 ```
 
 ### Getting started
-The easiest way to get up and running is to follow this [notebook](https://github.com/andrewekhalel/tta_predictor/blob/master/examples/pascal_voc.ipynb) showing an example on using Edafa to improve segmentation score on PASCAL VOC dataset.
+The easiest way to get up and running is to follow example notebooks for [segmentation](https://github.com/andrewekhalel/edafa/blob/master/examples/seg_pascal_voc.ipynb) and [classification](https://github.com/andrewekhalel/edafa/blob/master/examples/class_imagenet.ipynb) showing effect of TTA on performance.
 
 ### How to use Edafa
 The whole process can be done in 4 steps:
-1.  Import `BasePredictor` abstract class 
+1.  Import Predictor class based on your task category (Segmentation or Classification)
 ```python
-from edafa import BasePredictor
+from edafa import SegPredictor
 ```
-2. Inherit `BasePredictor` to your own class and implement the main 3 functions 
-	* `preprocess(self,img)` :  Implement preprocessing needed after reading image from disk (e.g. normalization, .. )
-	* `postprocess(self,pred)` :  Implement postprocessing needed after predicting an image (e.g. clipping, argmax, .. )
-	* `predict_patches(self,patches)` :  The function where your model takes image patches and return their prediction
+2. Inherit Predictor class and implement the main function 
+	* `predict_patches(self,patches)` : where your model takes image patches and return prediction
 
 ```python
-class myPredictor(BasePredictor):
+class myPredictor(SegPredictor):
     def __init__(self,model,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.model = model
-        
-    def preprocess(self,img):
-        return normalize(img)
-
-    def postprocess(self,pred):
-        return clipping(pred)
 
     def predict_patches(self,patches):
         return self.model.predict(patches)
@@ -41,9 +33,9 @@ class myPredictor(BasePredictor):
 ```python
 p = myPredictor(model,patch_size,model_output_channels,conf_file_path)
 ```
-4.  Call `predict_dir()` to run the prediction process 
-``` python
-p.predict_dir(in_dir,out_dir,overlap=0,extension='.png')
+4.  Call `predict_images()` to run the prediction process 
+```python
+p.predict_images(images,overlap=0)
 ```
 ### Configuration file
 Configuration file is a json file containing two pieces of information
@@ -55,8 +47,8 @@ Configuration file is a json file containing two pieces of information
 	* **FLIP_UD** : Flip upside-down
 	* **FLIP_LR** : Flip left-right
 2. Combination of the results (**mean**). Supported mean types:
-	* **ARITHMETIC** : Arithmetic mean
-	* **GEOMETRIC** : Geometric mean
+	* **ARITH** : Arithmetic mean
+	* **GEO** : Geometric mean
 
 Example of a conf file
 ```json
@@ -64,6 +56,6 @@ Example of a conf file
 "augs":["NO",
 "FLIP_UD",
 "FLIP_LR"],
-"mean":"ARITHMETIC"
+"mean":"ARITH"
 }
 ```
