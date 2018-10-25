@@ -1,0 +1,5 @@
+{
+"augs":["NO",
+		"FLIP_LR"],
+"mean":"ARITH"
+} 
