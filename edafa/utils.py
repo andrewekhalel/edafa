@@ -4,20 +4,8 @@ import numpy as np
 
 
 EXTENSIONS = ['jpg','png','tif','tiff']
-
-class AugmentationNotFound(Exception):
-	"""
-	An exception to indicate augmentation is unrecognized
-	"""
-	def __init__(self, message):
-		self.message = message
-
-class MeanTypeNotFound(Exception):
-	"""
-	An exception to indicate mean type is unrecognized
-	"""
-	def __init__(self, message):
-		self.message = message
+AUGS = ['NO','ROT90', 'ROT180','ROT270', 'FLIP_UD','FLIP_LR']
+MEANS = ['ARITH', 'GEO']
 
 def cint(num):
 	"""
@@ -118,8 +106,6 @@ def apply(aug,img):
 		return flip_up(img)
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
-	else:
-		raise AugmentationNotFound("%s is not a valid augmentation!"%aug)
 
 def reverse(aug,img):
 	"""
@@ -142,5 +128,3 @@ def reverse(aug,img):
 		return flip_up(img)
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
-	else:
-		raise AugmentationNotFound("%s is not a valid augmentation!"%aug)

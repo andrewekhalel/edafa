@@ -18,6 +18,9 @@ class Child(BasePredictor):
 	def predict_patches(self,patches):
 		pass
 
+	def predict_single(self,patches):
+		pass
+
 class Tester(TestCase):
 	def __init__(self, *args, **kwargs):
 		super(Tester, self).__init__(*args, **kwargs)
@@ -31,7 +34,7 @@ class Tester(TestCase):
 		self.assertTrue(p.augs == ["NO",
 									"FLIP_UD",
 									"FLIP_LR"])
-		self.assertTrue(p.mean == "ARITHMETIC")
+		self.assertTrue(p.mean == "ARITH")
 
 if __name__ == '__main__':
     unittest.main()
