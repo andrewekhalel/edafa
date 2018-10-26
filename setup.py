@@ -7,8 +7,8 @@ def readme():
 
 
 setup(name='edafa',
-	version='0.1',
-	description='Test Time Augmentation (TTA) wrapper for computer vision tasks: segmentation, super-resolution, ... etc.',
+	version='0.1.1',
+	description='Test Time Augmentation (TTA) wrapper for computer vision tasks: segmentation,classification, super-resolution, ... etc.',
 	long_description=readme(),
 	long_description_content_type="text/markdown",
 	classifiers=[
@@ -27,7 +27,7 @@ setup(name='edafa',
 	'Programming Language :: Python :: 3.5',
 	'Programming Language :: Python :: 3.6',
 	],
-	keywords='augmentation segmentation super-resolution pansharpening keras tensorflow pytorch',
+	keywords='augmentation classification segmentation super-resolution pansharpening keras tensorflow pytorch',
 	url='https://github.com/andrewekhalel/edafa',
 	author='Andrew Khalel',
 	author_email='andrewekhalel@gmail.com',
@@ -38,4 +38,4 @@ setup(name='edafa',
 	install_requires=[
 	'numpy', 'tifffile', 'opencv-python' 
 	],
-	zip_safe=False)
+        zip_safe=False)

@@ -42,16 +42,14 @@ class SegPredictor(BasePredictor):
 			return mixed ** (1./len(self.augs))
 
 
-	def predict_images(self,imgs,overlap=0):
-		preds = []
-		for img in imgs:
-			if len(img.shape) == 4 and img.shape[0] == 1:
-				img = img[0,:,:,:]
-			pred = self._predict_single(img,overlap=overlap)
-			preds.append(pred)
-		return np.array(preds)
-
 	def _predict_single(self,img,overlap=0):
+		"""
+		predict single image
+		:param img: image to predict
+		:param overlap: overlap size between patches in prediction of large image (default = 0)
+
+		:return: prediction on the image
+		"""
 		output = np.zeros((*img.shape[:2],self.out_channels))
 		times = np.zeros(img.shape[:2])
 

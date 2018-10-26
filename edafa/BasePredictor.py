@@ -15,7 +15,6 @@ class BasePredictor(ABC):
 	def __init__(self,conf_path):
 		""" 
 		Class constructor
-
 		
 		:param conf_path: configuration file path
 		"""
@@ -55,6 +54,10 @@ class BasePredictor(ABC):
 	# 	pass
 
 	def _parse_conf(self,conf_path):
+		"""
+		Parse the configuration file
+		:param conf_path: configuration file path
+		"""
 		with open(conf_path) as f:
 			loaded = json.load(f)
 			if "augs" in  loaded:
@@ -99,11 +102,30 @@ class BasePredictor(ABC):
 			
 	@abstractmethod
 	def _predict_single(self,img,overlap=0):
+		"""
+		predict single image
+		:param img: image to predict
+		:param overlap: overlap size between patches in prediction of large image (default = 0)
+
+		:return: prediction on the image
+		"""
 		pass
 
-	@abstractmethod
 	def predict_images(self,imgs,overlap=0):
-		pass
+		"""
+		predict a set of images
+		:param imgs: a list of images to predict
+		:param overlap: overlap size between patches in prediction of large image (default = 0)
+
+		:return: predictions of all images
+		"""
+		preds = []
+		for img in imgs:
+			if len(img.shape) == 4 and img.shape[0] == 1:
+				img = img[0,:,:,:]
+			pred = self._predict_single(img)
+			preds.append(pred)
+		return np.array(preds)
 	
 	# def predict_dir(self,in_path,out_path,overlap=0,extension='.png'):
 	# 	"""
