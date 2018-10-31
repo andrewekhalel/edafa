@@ -28,8 +28,10 @@ class BasePredictor(ABC):
 		"""
 		Virtual method uses your model to predict patches
 		:param patches: input patches to model for prediction
+		:type patches: numpy.ndarray
 
 		:return: prediction on these patches
+		:rtype: numpy.ndarray
 		"""
 		pass
 
