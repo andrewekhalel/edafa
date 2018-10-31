@@ -9,7 +9,7 @@ pip install edafa
 ```
 
 ### Getting started
-The easiest way to get up and running is to follow example notebooks for [segmentation](https://github.com/andrewekhalel/edafa/blob/master/examples/seg_pascal_voc.ipynb) and [classification](https://github.com/andrewekhalel/edafa/blob/master/examples/class_imagenet.ipynb) showing effect of TTA on performance.
+The easiest way to get up and running is to follow [example notebooks](https://github.com/andrewekhalel/edafa/tree/master/examples) for segmentation and classification showing TTA effect on performance.
 
 ### How to use Edafa
 The whole process can be done in 4 steps:
@@ -18,7 +18,7 @@ The whole process can be done in 4 steps:
 from edafa import SegPredictor
 ```
 2. Inherit Predictor class and implement the main function 
-	* `predict_patches(self,patches)` : where your model takes image patches and return prediction
+	* `predict_patches(self,patches)` : where your model takes image patches (numpy.ndarray) and return prediction (numpy.ndarray)
 
 ```python
 class myPredictor(SegPredictor):
