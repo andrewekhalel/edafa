@@ -5,7 +5,7 @@ Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on image
 
 ### Test Time Augmentation (TTA)
 
-Applying different transformations to the test image and then average the result for more robust results.
+Applying different transformations to test images and then average for more robust results.
 
 ![pipeline](https://preview.ibb.co/kH61v0/pipeline.png)
 
