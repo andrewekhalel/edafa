@@ -3,6 +3,12 @@
 
 Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, classification, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
 
+### Test Time Augmentation (TTA)
+
+Applying different transformations to the test image and then average the result for more robust results.
+
+![pipeline](https://preview.ibb.co/kH61v0/pipeline.png)
+
 ### Installation
 ```
 pip install edafa
