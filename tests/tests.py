@@ -1,22 +1,16 @@
 from unittest import TestCase
-from edafa import BasePredictor
+from edafa import ClassPredictor
 import os
 from abc import abstractmethod
 
-class Child(BasePredictor):
+class Child(ClassPredictor):
 	"""
 	Child class to be used in testing
 	"""
 	def __init__(self,*args,**kwargs):
 		super().__init__(*args,**kwargs)
- 
-	def reverse_aug(self,aug_patch):
-		pass
 
-	def predict_images(self,imgs):
-		pass
-
-	def _predict_single(self,patches):
+	def predict_patches(self,patches):
 		pass
 
 class Tester(TestCase):
@@ -24,11 +18,25 @@ class Tester(TestCase):
 		super(Tester, self).__init__(*args, **kwargs)
 		self.path = os.path.join(os.path.dirname(os.path.dirname(__file__)))
 
-	def test_pass_json_loading(self):
+	def test_pass_json_file(self):
 		"""
-		Test configuration loading
+		Test configuration file loading
 		"""
 		p = Child(os.path.join(self.path,"conf/pascal_voc.json"))
+		self.assertTrue(p.augs == ["NO",
+									"FLIP_UD",
+									"FLIP_LR"])
+		self.assertTrue(p.mean == "ARITH")
+
+	def test_pass_json_string(self):
+		"""
+		Test configuration as string
+		"""
+		conf = '{"augs":["NO",\
+				"FLIP_UD",\
+				"FLIP_LR"],\
+				"mean":"ARITH"}'
+		p = Child(conf)
 		self.assertTrue(p.augs == ["NO",
 									"FLIP_UD",
 									"FLIP_LR"])
