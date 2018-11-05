@@ -19,7 +19,7 @@ The easiest way to get up and running is to follow [example notebooks](https://g
 
 ### How to use Edafa
 The whole process can be done in 4 steps:
-1.  Import Predictor class based on your task category (Segmentation or Classification)
+1.  Import Predictor class based on your task category: Segmentation (`SegPredictor`) or Classification (`ClassPredictor`) 
 ```python
 from edafa import SegPredictor
 ```
