@@ -2,8 +2,13 @@ from .BasePredictor import BasePredictor
 import numpy as np
 
 class ClassPredictor(BasePredictor):
-	def __init__(self,conf_path):
-		super().__init__(conf_path=conf_path)
+	def __init__(self,conf):
+		"""
+		Initialize class
+		
+		:param conf: configuration (json string or file path)
+		"""
+		super().__init__(conf=conf)
 
 	def reverse_aug(self,aug_patch):
 		"""

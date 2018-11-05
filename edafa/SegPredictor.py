@@ -3,16 +3,17 @@ import numpy as np
 from .utils import *
 
 class SegPredictor(BasePredictor):
-	def __init__(self,in_patch_size,out_channels,conf_path,out_patch_size=None):
+	def __init__(self,in_patch_size,out_channels,conf,out_patch_size=None):
 		"""
-
+		Initialize class
+		
 		:param in_patch_size: input patch size (assumes width = height)
 		:param out_channels: number of channels in your model's output (for example number of classes in segmentation)
-		:param conf_path: configuration file path
+		:param conf: configuration (json string or file path)
 		:param out_patch_size: output patch size in case of no padding (default = in_patch_size)
 
 		"""
-		super().__init__(conf_path=conf_path)
+		super().__init__(conf=conf)
 
 		self.in_patch_size = in_patch_size	
 		self.out_channels = out_channels

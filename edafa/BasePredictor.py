@@ -12,14 +12,14 @@ class BasePredictor(ABC):
 	"""
 	An abstract class (wrapper for your model) to apply test time augmentation (TTA)
 	"""
-	def __init__(self,conf_path):
+	def __init__(self,conf):
 		""" 
 		Class constructor
 		
-		:param conf_path: configuration file path
+		:param conf: configuration (json string or file path)
 		"""
 
-		self._parse_conf(conf_path)
+		self._parse_conf(conf)
 
 
 		
@@ -55,30 +55,34 @@ class BasePredictor(ABC):
 	# 	"""
 	# 	pass
 
-	def _parse_conf(self,conf_path):
+	def _parse_conf(self,conf):
 		"""
 		Parse the configuration file
-		:param conf_path: configuration file path
+		:param conf: configuration (json string or file path)
 		"""
-		with open(conf_path) as f:
-			loaded = json.load(f)
-			if "augs" in  loaded:
-				self.augs = loaded["augs"]
-				for aug in self.augs:
-					if aug not in AUGS:
-						raise AugmentationUnrecognized('Unrecognized augmentation: (%s) in configuration file.'%aug)
-			else:
-				warnings.warn('No "augs" found in configuration file. No augmentations will be used.')
-				self.augs = ["NO"]
+		try:
+			loaded = json.loads(conf)
+		except:
+			with open(conf) as f:
+				loaded = json.load(f)
+
+		if "augs" in  loaded:
+			self.augs = loaded["augs"]
+			for aug in self.augs:
+				if aug not in AUGS:
+					raise AugmentationUnrecognized('Unrecognized augmentation: (%s) in configuration file.'%aug)
+		else:
+			warnings.warn('No "augs" found in configuration file. No augmentations will be used.')
+			self.augs = ["NO"]
 
 
-			if "mean" in loaded:
-				self.mean = loaded["mean"]
-				if self.mean not in MEANS:
-					raise MeanUnrecognized('Unrecognized mean: (%s) in configuration file.'%self.mean)
-			else:
-				warnings.warn('No "mean" found in configuration file. "ARITH" mean will be used.')
-				self.mean = "ARITH"
+		if "mean" in loaded:
+			self.mean = loaded["mean"]
+			if self.mean not in MEANS:
+				raise MeanUnrecognized('Unrecognized mean: (%s) in configuration file.'%self.mean)
+		else:
+			warnings.warn('No "mean" found in configuration file. "ARITH" mean will be used.')
+			self.mean = "ARITH"
 
 	def apply_aug(self,img):
 		"""
