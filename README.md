@@ -1,14 +1,12 @@
-
-
 # Edafa
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/andrewekhalel/edafa/issues) [![HitCount](http://hits.dwyl.io/andrewekhalel/edafa.svg)](http://hits.dwyl.io/andrewekhalel/edafa)
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/andrewekhalel/edafa/issues) [![HitCount](http://hits.dwyl.io/andrewekhalel/edafa.svg)](http://hits.dwyl.io/andrewekhalel/edafa)<br/>
 Edafa is a simple wrapper that implements Test Time Augmentations (TTA) on images for computer vision problems like: segmentation, classification, super-resolution, Pansharpening, etc. TTAs guarantees better results in most of the tasks.
 
 ### Test Time Augmentation (TTA)
 
 Applying different transformations to test images and then average for more robust results.
 
-->![pipeline](https://preview.ibb.co/kH61v0/pipeline.png)<-
+![pipeline](https://preview.ibb.co/kH61v0/pipeline.png)
 
 ### Installation
 ```
