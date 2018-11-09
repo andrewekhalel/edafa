@@ -1,5 +1,6 @@
 {
 "augs":["NO",
 		"FLIP_LR"],
-"mean":"ARITH"
+"mean":"ARITH",
+"bits":8
 } 

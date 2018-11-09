@@ -70,19 +70,25 @@ class BasePredictor(ABC):
 			self.augs = loaded["augs"]
 			for aug in self.augs:
 				if aug not in AUGS:
-					raise AugmentationUnrecognized('Unrecognized augmentation: (%s) in configuration file.'%aug)
+					raise AugmentationUnrecognized('Unrecognized augmentation: %s in configuration.'%aug)
 		else:
-			warnings.warn('No "augs" found in configuration file. No augmentations will be used.')
+			warnings.warn('No "augs" found in configuration file. No augmentations will be used.',SyntaxWarning)
 			self.augs = ["NO"]
 
 
 		if "mean" in loaded:
 			self.mean = loaded["mean"]
 			if self.mean not in MEANS:
-				raise MeanUnrecognized('Unrecognized mean: (%s) in configuration file.'%self.mean)
+				raise MeanUnrecognized('Unrecognized mean: %s in configuration.'%self.mean)
 		else:
-			warnings.warn('No "mean" found in configuration file. "ARITH" mean will be used.')
+			warnings.warn('No "mean" found in configuration file. "ARITH" mean will be used.',SyntaxWarning)
 			self.mean = "ARITH"
+
+		if "bits" in loaded:
+			self.bits = loaded["bits"]
+		else:
+			warnings.warn('No "bits" found in configuration file. 8-bits will be used.',SyntaxWarning)
+			self.bits = 8
 
 	def apply_aug(self,img):
 		"""
@@ -93,7 +99,7 @@ class BasePredictor(ABC):
 		"""
 		aug_patch = np.zeros((len(self.augs),*img.shape),dtype=img.dtype)
 		for i,aug in enumerate(self.augs):
-			aug_patch[i] = apply(aug,img)
+			aug_patch[i] = apply(aug,self.bits)
 		return aug_patch
 
 	@abstractmethod

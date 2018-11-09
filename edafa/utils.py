@@ -4,8 +4,8 @@ import numpy as np
 
 
 EXTENSIONS = ['jpg','png','tif','tiff']
-AUGS = ['NO','ROT90', 'ROT180','ROT270', 'FLIP_UD','FLIP_LR']
-MEANS = ['ARITH', 'GEO']
+AUGS = ['NO','ROT90','ROT180','ROT270','FLIP_UD','FLIP_LR','BRIGHT','CONTRAST']
+MEANS = ['ARITH','GEO']
 
 def cint(num):
 	"""
@@ -88,11 +88,10 @@ def flip_lr(img):
 	"""
 	return np.fliplr(img)
 
-def change_brightness(img, brightness=None,bits=8):
+def change_brightness(img,bits=8):
 	MAX = get_max(bits)
 
-	if brightness is None:
-		brightness = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
+	brightness = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
 
 	if brightness > 0:
 		shadow = brightness
@@ -107,11 +106,10 @@ def change_brightness(img, brightness=None,bits=8):
 
 	return buf
 
-def change_contrast(img, contrast=None):
+def change_contrast(img,bits=8):
 	MAX = get_max(bits)
 
-	if contrast is None:
-		contrast = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
+	contrast = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
 
 
 	f = (MAX//2)*(contrast + (MAX//2))/((MAX//2)*(MAX//2-contrast))
@@ -122,7 +120,7 @@ def change_contrast(img, contrast=None):
 
 	return buf
 
-def apply(aug,img):
+def apply(aug,img,bits):
 	"""
 	Maps augmentation name to action
 	:param aug: augmentation name
@@ -143,6 +141,10 @@ def apply(aug,img):
 		return flip_up(img)
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
+	elif aug == "BRIGHT":
+		return change_brightness(img,bits)
+	elif aug == "CONTRAST":
+		return change_contrast(img,bits)
 
 def reverse(aug,img):
 	"""
@@ -151,7 +153,6 @@ def reverse(aug,img):
 	:param img: input image
 
 	:returns: reverse of augmented image
-	:raises AugmentationNotFound: exception to indicate that specified augmentation is not recongized
 	"""
 	if aug == "NO":
 		return img
@@ -165,3 +166,7 @@ def reverse(aug,img):
 		return flip_up(img)
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
+	elif aug == "BRIGHT":
+		return img
+	elif aug == "CONTRAST":
+		return img
