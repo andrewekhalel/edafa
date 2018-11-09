@@ -25,6 +25,9 @@ def rint(num):
 	"""
 	return int(round(num))
 
+def get_max(bits):
+	return 2**bits -1
+
 def add_reflections(img,in_patch_size,out_patch_size):
 	"""
 	Add mirror reflections to the passed image
@@ -84,6 +87,40 @@ def flip_lr(img):
 	:returns: flipped image
 	"""
 	return np.fliplr(img)
+
+def change_brightness(img, brightness=None,bits=8):
+	MAX = get_max(bits)
+
+	if brightness is None:
+		brightness = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
+
+	if brightness > 0:
+		shadow = brightness
+		highlight = MAX
+	else:
+		shadow = 0
+		highlight = MAX + brightness
+	alpha_b = (highlight - shadow)/MAX
+	gamma_b = shadow
+
+	buf = cv2.addWeighted(img, alpha_b, img, 0, gamma_b)
+
+	return buf
+
+def change_contrast(img, contrast=None):
+	MAX = get_max(bits)
+
+	if contrast is None:
+		contrast = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
+
+
+	f = (MAX//2)*(contrast + (MAX//2))/((MAX//2)*(MAX//2-contrast))
+	alpha_c = f
+	gamma_c = (MAX//2)*(1-f)
+
+	buf = cv2.addWeighted(img, alpha_c, img, 0, gamma_c)
+
+	return buf
 
 def apply(aug,img):
 	"""
