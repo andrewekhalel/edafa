@@ -12,7 +12,7 @@ class Child(ClassPredictor):
 		super().__init__(*args,**kwargs)
 
 	def predict_patches(self,patches):
-		pass
+		return patches
 
 class Tester(TestCase):
 	def __init__(self, *args, **kwargs):
@@ -52,12 +52,13 @@ class Tester(TestCase):
 		"""
 		conf = '{"mean":"ARITH",\
 				"bits":8}'
-		p = Child(conf)
+
+		with self.assertWarns(SyntaxWarning):
+			p = Child(conf)
 			
 		self.assertTrue(p.augs == ["NO"])
 		self.assertTrue(p.mean == "ARITH")
 		self.assertTrue(p.bits == 8)
-		self.assertRaises(SyntaxWarning)
 
 	def test_pass_no_mean(self):
 		"""
