@@ -1,8 +1,6 @@
 from unittest import TestCase
 from edafa import ClassPredictor
 import os
-from abc import abstractmethod
-import warnings
 
 class Child(ClassPredictor):
 	"""
@@ -14,9 +12,9 @@ class Child(ClassPredictor):
 	def predict_patches(self,patches):
 		return patches
 
-class Tester(TestCase):
+class LogisticsTester(TestCase):
 	def __init__(self, *args, **kwargs):
-		super(Tester, self).__init__(*args, **kwargs)
+		super(LogisticsTester, self).__init__(*args, **kwargs)
 		self.path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 	def test_pass_json_file(self):
@@ -111,8 +109,6 @@ class Tester(TestCase):
 		# TODO: replace Exception with MeanUnrecognized
 		with self.assertRaises(Exception):
 			p = Child(conf)
-
-		
 
 
 if __name__ == '__main__':
