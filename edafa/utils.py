@@ -26,6 +26,12 @@ def rint(num):
 	return int(round(num))
 
 def get_max(bits):
+	"""
+	Returns max value represented by given number of bits
+	:param bits: number of bits
+
+	:returns: 2^(bits) - 1
+	"""
 	return 2**bits -1
 
 def add_reflections(img,in_patch_size,out_patch_size):
@@ -89,6 +95,13 @@ def flip_lr(img):
 	return np.fliplr(img)
 
 def change_brightness(img,bits=8):
+	"""
+	Randomly change img brightness
+	:param img: input image
+	:param bits: number of bits to represent a single color value
+
+	:returns: transformed image
+	"""
 	MAX = get_max(bits)
 
 	brightness = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
@@ -107,12 +120,19 @@ def change_brightness(img,bits=8):
 	return buf
 
 def change_contrast(img,bits=8):
+	"""
+	Randomly change img contrast
+	:param img: input image
+	:param bits: number of bits to represent a single color value
+
+	:returns: transformed image
+	"""
 	MAX = get_max(bits)
 
-	contrast = np.random.choice([-MAX//2,-MAX//4,0,MAX//4,MAX//2],1)
+	contrast = np.random.choice([-MAX//4,-MAX//8,0,MAX//8,MAX//4],1)
 
 
-	f = (MAX//2)*(contrast + (MAX//2))/((MAX//2)*(MAX//2-contrast))
+	f = (MAX//2)*(contrast + (MAX//2))/((MAX//2)*(MAX//2-contrast) +1)
 	alpha_c = f
 	gamma_c = (MAX//2)*(1-f)
 

@@ -99,7 +99,7 @@ class BasePredictor(ABC):
 		"""
 		aug_patch = np.zeros((len(self.augs),*img.shape),dtype=img.dtype)
 		for i,aug in enumerate(self.augs):
-			aug_patch[i] = apply(aug,self.bits)
+			aug_patch[i] = apply(aug,img,self.bits)
 		return aug_patch
 
 	@abstractmethod
