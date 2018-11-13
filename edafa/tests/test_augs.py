@@ -3,7 +3,12 @@ from edafa import SegPredictor
 import os
 import cv2
 import numpy as np
+
 import matplotlib.pyplot as plt
+
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from utils import rot90,flip_ud,flip_lr
 
 class Child(SegPredictor):
 	"""
@@ -82,6 +87,33 @@ class AugTester(TestCase):
 				}'
 		p = Child(in_patch_size=512,out_channels=3,conf=conf)
 		self.assertTrue((p.predict_images([img])[0] - img).sum()==0)
+
+	def test_rot90_fn(self):
+		"""
+		Test rotation function
+		"""
+		img = self._read_img('lena512color.tiff')
+		img_rot = self._read_img('lena512color_rot90.tiff')
+		
+		self.assertTrue((rot90(img,1)-img_rot).sum() ==0)
+
+	def test_flip_ud_fn(self):
+		"""
+		Test upside-down flipping function
+		"""
+		img = self._read_img('lena512color.tiff')
+		img_flip_ud = self._read_img('lena512color_flip_ud.tiff')
+		
+		self.assertTrue((flip_ud(img)-img_flip_ud).sum() ==0)
+
+	def test_flip_lr_fn(self):
+		"""
+		Test keft-right flipping function
+		"""
+		img = self._read_img('lena512color.tiff')
+		img_flip_lr = self._read_img('lena512color_flip_lr.tiff')
+		
+		self.assertTrue((flip_lr(img)-img_flip_lr).sum() ==0)
 
 	def _test_bright(self):
 		"""

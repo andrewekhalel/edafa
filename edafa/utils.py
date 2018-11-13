@@ -76,7 +76,7 @@ def rot90(img,k):
 	"""
 	return np.rot90(img,k=k)
 
-def flip_up(img):
+def flip_ud(img):
 	"""
 	Flips an image upside-down
 	:param img: input image
@@ -158,7 +158,7 @@ def apply(aug,img,bits):
 	elif aug == "ROT270":
 		return rot90(img,3)
 	elif aug == "FLIP_UD":
-		return flip_up(img)
+		return flip_ud(img)
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
 	elif aug == "BRIGHT":
@@ -183,7 +183,7 @@ def reverse(aug,img):
 	elif aug == "ROT270":
 		return rot90(img,-3)
 	elif aug == "FLIP_UD":
-		return flip_up(img)
+		return flip_ud(img)
 	elif aug == "FLIP_LR":
 		return flip_lr(img)
 	elif aug == "BRIGHT":
