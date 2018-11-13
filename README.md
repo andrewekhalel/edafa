@@ -9,7 +9,7 @@ Applying different transformations to test images and then average for more robu
 ![pipeline](https://preview.ibb.co/kH61v0/pipeline.png)
 
 ### Installation
-```
+```shell
 pip install edafa
 ```
 
@@ -64,8 +64,8 @@ Example of a conf file
 "mean":"ARITH"
 }
 ```
-### run tests
+### Run tests
 ```shell
 nosetests
 ```
-make sure that all tests passed.
+Make sure that all tests passed.
