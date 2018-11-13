@@ -64,3 +64,8 @@ Example of a conf file
 "mean":"ARITH"
 }
 ```
+### run tests
+```shell
+nosetests
+```
+make sure that all tests passed.
