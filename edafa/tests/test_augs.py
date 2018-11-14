@@ -145,5 +145,35 @@ class AugTester(TestCase):
 		axarr[1].imshow(p.predict_images([img])[0][...,::-1].astype(np.uint8))
 		plt.show()
 
+	def _test_gauss_noise(self):
+		"""
+		Test "GAUSSIAN" augmentation
+		"""
+		img = self._read_img('lena512color.tiff')
+		conf ='{"augs":["GAUSSIAN"],\
+				"mean":"ARITH",\
+				"bits":8\
+				}'
+		p = Child(in_patch_size=512,out_channels=3,conf=conf)
+		f, axarr = plt.subplots(2)
+		axarr[0].imshow(img[...,::-1])
+		axarr[1].imshow(p.predict_images([img])[0][...,::-1].astype(np.uint8))
+		plt.show()
+
+	def _test_gamma_correction(self):
+		"""
+		Test "GAMMA" augmentation
+		"""
+		img = self._read_img('lena512color.tiff')
+		conf ='{"augs":["GAMMA"],\
+				"mean":"ARITH",\
+				"bits":8\
+				}'
+		p = Child(in_patch_size=512,out_channels=3,conf=conf)
+		f, axarr = plt.subplots(2)
+		axarr[0].imshow(img[...,::-1])
+		axarr[1].imshow(p.predict_images([img])[0][...,::-1].astype(np.uint8))
+		plt.show()
+
 if __name__ == '__main__':
     unittest.main()

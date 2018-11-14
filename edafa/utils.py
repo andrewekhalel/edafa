@@ -3,8 +3,8 @@ import math
 import numpy as np
 
 
-EXTENSIONS = ['jpg','png','tif','tiff']
-AUGS = ['NO','ROT90','ROT180','ROT270','FLIP_UD','FLIP_LR','BRIGHT','CONTRAST']
+# EXTENSIONS = ['jpg','png','tif','tiff']
+AUGS = ['NO','ROT90','ROT180','ROT270','FLIP_UD','FLIP_LR','BRIGHT','CONTRAST','GAUSSIAN', 'GAMMA']
 MEANS = ['ARITH','GEO']
 
 def cint(num):
@@ -140,6 +140,35 @@ def change_contrast(img,bits=8):
 
 	return buf
 
+def add_gauss_noise(img,bits):
+	"""
+	Add random gaussian noise to image
+	:param img: input image
+	:param bits: number of bits to represent a single color value
+
+	:returns: image with noise
+	"""
+	MAX = get_max(bits)
+	noise = img.copy()
+	cv2.randn(noise, 0, MAX//2)
+	return img + noise
+
+def gamma_correction(img,bits):
+	"""
+	Image gamma correction with random gamma
+	:param img: input image
+	:param bits: number of bits to represent a single color value
+
+	:returns: corrected image
+	"""
+	MAX = get_max(bits)
+	gamma = np.random.randint(1,20)/10.
+	invGamma = 1.0 / gamma
+	table = np.array([((i / float(MAX)) ** invGamma) * MAX
+		for i in np.arange(0, (MAX+1))])
+ 
+	return cv2.LUT(img, table)
+
 def apply(aug,img,bits):
 	"""
 	Maps augmentation name to action
@@ -165,6 +194,10 @@ def apply(aug,img,bits):
 		return change_brightness(img,bits)
 	elif aug == "CONTRAST":
 		return change_contrast(img,bits)
+	elif aug == "GAUSSIAN":
+		return add_gauss_noise(img,bits)
+	elif aug == "GAMMA":
+		return gamma_correction(img,bits)
 
 def reverse(aug,img):
 	"""
@@ -189,4 +222,8 @@ def reverse(aug,img):
 	elif aug == "BRIGHT":
 		return img
 	elif aug == "CONTRAST":
+		return img
+	elif aug == "GAUSSIAN":
+		return img
+	elif aug == "GAMMA":
 		return img
