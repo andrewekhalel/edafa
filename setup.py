@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='edafa',
-	version='0.1.3',
+	version='0.1.4',
 	description='Test Time Augmentation (TTA) wrapper for computer vision tasks: segmentation,classification, super-resolution, ... etc.',
 	long_description=readme(),
 	long_description_content_type="text/markdown",

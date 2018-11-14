@@ -51,9 +51,14 @@ Configuration file is a json file containing two pieces of information
 	* **ROT270** : Rotate 270 degrees
 	* **FLIP_UD** : Flip upside-down
 	* **FLIP_LR** : Flip left-right
+	* **BRIGHT** : Change image brightness randomly
+	* **CONTRAST** : Change image contrast randomly
+	* **GAUSSIAN** : Add random gaussian noise
+	* **GAMMA** : Perform gamma correction with random gamma
 2. Combination of the results (**mean**). Supported mean types:
 	* **ARITH** : Arithmetic mean
 	* **GEO** : Geometric mean
+3. Number of bits image (default is 8-bits) (**bits**).
 
 Example of a conf file
 ```json
@@ -61,11 +66,14 @@ Example of a conf file
 "augs":["NO",
 "FLIP_UD",
 "FLIP_LR"],
-"mean":"ARITH"
+"mean":"ARITH",
+"bits":8
 }
 ```
-### Run tests
+You can either pass file path or the actual json text to `conf` parameter.
+
+## Contribution
+All contributions are welcomed. Please make sure that all tests passed before pull request. To run tests
 ```shell
 nosetests
 ```
-Make sure that all tests passed.
