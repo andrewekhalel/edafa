@@ -59,10 +59,14 @@ class SegPredictor(BasePredictor):
 		padding = rint((self.in_patch_size - self.out_patch_size)/2.)
 
 		delta = self.in_patch_size-overlap
-		for h in range(0,img.shape[0]-self.in_patch_size +1,delta):
-			for w in range(0,img.shape[1]-self.in_patch_size +1,delta):
-				in_patch = img[h:(h+self.in_patch_size),
-								w:(w+self.in_patch_size),
+
+		in_patch_h = min(img.shape[0],self.in_patch_size)
+		in_patch_w = min(img.shape[1],self.in_patch_size)
+
+		for h in range(0,img.shape[0]-in_patch_h +1,delta):
+			for w in range(0,img.shape[1]-in_patch_w +1,delta):
+				in_patch = img[h:(h+in_patch_h),
+								w:(w+in_patch_w),
 								:]
 				aug_patches = self.apply_aug(in_patch)
 				pred = self.predict_patches(aug_patches)
