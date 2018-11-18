@@ -27,6 +27,7 @@ class SegPredictor(BasePredictor):
 	def reverse_aug(self,aug_patch):
 		"""
 		Reverse augmentations applied and calculate their combined mean
+
 		:param aug_patch: set of prediction of the model to different augmentations
 		
 		:returns: single combined patch 
@@ -46,6 +47,7 @@ class SegPredictor(BasePredictor):
 	def _predict_single(self,img,overlap=0):
 		"""
 		predict single image
+		
 		:param img: image to predict
 		:param overlap: overlap size between patches in prediction of large image (default = 0)
 

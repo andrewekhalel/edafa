@@ -13,6 +13,7 @@ class ClassPredictor(BasePredictor):
 	def reverse_aug(self,aug_patch):
 		"""
 		Reverse augmentations applied and calculate their combined mean
+
 		:param aug_patch: set of prediction of the model to different augmentations
 		
 		:returns: single combined patch 
@@ -26,6 +27,7 @@ class ClassPredictor(BasePredictor):
 	def _predict_single(self,img):
 		"""
 		predict single image
+		
 		:param img: image to predict
 
 		:return: prediction on the image

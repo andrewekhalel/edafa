@@ -27,6 +27,7 @@ class BasePredictor(ABC):
 	def predict_patches(self,patches):
 		"""
 		Virtual method uses your model to predict patches
+
 		:param patches: input patches to model for prediction
 		:type patches: numpy.ndarray
 
@@ -58,6 +59,7 @@ class BasePredictor(ABC):
 	def _parse_conf(self,conf):
 		"""
 		Parse the configuration file
+
 		:param conf: configuration (json string or file path)
 		"""
 		try:
@@ -93,6 +95,7 @@ class BasePredictor(ABC):
 	def apply_aug(self,img):
 		"""
 		Apply augmentations to the supplied image
+
 		:param img: original image before augmentation
 		
 		:returns: a set of augmentations of original image
@@ -106,6 +109,7 @@ class BasePredictor(ABC):
 	def reverse_aug(self,aug_patch):
 		"""
 		Reverse augmentations applied and calculate their combined mean
+
 		:param aug_patch: set of prediction of the model to different augmentations
 		
 		:returns: single combined patch 
@@ -116,6 +120,7 @@ class BasePredictor(ABC):
 	def _predict_single(self,img,overlap=0):
 		"""
 		predict single image
+
 		:param img: image to predict
 		:param overlap: overlap size between patches in prediction of large image (default = 0)
 
@@ -126,6 +131,7 @@ class BasePredictor(ABC):
 	def predict_images(self,imgs,overlap=0):
 		"""
 		predict a set of images
+		
 		:param imgs: a list of images to predict
 		:param overlap: overlap size between patches in prediction of large image (default = 0)
 

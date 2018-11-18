@@ -10,6 +10,7 @@ MEANS = ['ARITH','GEO']
 def cint(num):
 	"""
 	Returns ceiling of number as type integer
+	
 	:param num: input number
 
 	:returns: integer ceil number
@@ -19,6 +20,7 @@ def cint(num):
 def rint(num):
 	"""
 	Returns rounded number as type integer
+
 	:param num: input number
 
 	:returns: integer rounded number
@@ -28,6 +30,7 @@ def rint(num):
 def get_max(bits):
 	"""
 	Returns max value represented by given number of bits
+
 	:param bits: number of bits
 
 	:returns: 2^(bits) - 1
@@ -69,6 +72,7 @@ def add_reflections(img,in_patch_size,out_patch_size):
 def rot90(img,k):
 	"""
 	Rotates an image k*90 degrees
+
 	:param img: input image
 	:param k: number of times the image is rotated by 90 degrees
 
@@ -79,6 +83,7 @@ def rot90(img,k):
 def flip_ud(img):
 	"""
 	Flips an image upside-down
+
 	:param img: input image
 
 	:returns: flipped image
@@ -88,6 +93,7 @@ def flip_ud(img):
 def flip_lr(img):
 	"""
 	Flips an image left-to-right
+
 	:param img: input image
 
 	:returns: flipped image
@@ -97,6 +103,7 @@ def flip_lr(img):
 def change_brightness(img,bits=8):
 	"""
 	Randomly change img brightness
+
 	:param img: input image
 	:param bits: number of bits to represent a single color value
 
@@ -122,6 +129,7 @@ def change_brightness(img,bits=8):
 def change_contrast(img,bits=8):
 	"""
 	Randomly change img contrast
+
 	:param img: input image
 	:param bits: number of bits to represent a single color value
 
@@ -143,6 +151,7 @@ def change_contrast(img,bits=8):
 def add_gauss_noise(img,bits):
 	"""
 	Add random gaussian noise to image
+
 	:param img: input image
 	:param bits: number of bits to represent a single color value
 
@@ -156,6 +165,7 @@ def add_gauss_noise(img,bits):
 def gamma_correction(img,bits):
 	"""
 	Image gamma correction with random gamma
+
 	:param img: input image
 	:param bits: number of bits to represent a single color value
 
@@ -172,6 +182,7 @@ def gamma_correction(img,bits):
 def apply(aug,img,bits):
 	"""
 	Maps augmentation name to action
+
 	:param aug: augmentation name
 	:param img: input image
 
@@ -202,6 +213,7 @@ def apply(aug,img,bits):
 def reverse(aug,img):
 	"""
 	Maps augmentation name to reverse action
+
 	:param aug: augmentation name
 	:param img: input image
 
