@@ -1,4 +1,3 @@
-import tifffile as tif
 import os
 import cv2
 from .utils import *
