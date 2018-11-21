@@ -53,8 +53,8 @@ class SegPredictor(BasePredictor):
 
 		:return: prediction on the image
 		"""
-		shp = img.shape[:2]
-		output = np.zeros((*shp,self.out_channels))
+		h,w = img.shape[:2]
+		output = np.zeros((h,w,self.out_channels))
 		times = np.zeros(img.shape[:2])
 
 		img = add_reflections(img,self.in_patch_size,self.out_patch_size)
