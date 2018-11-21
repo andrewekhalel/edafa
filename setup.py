@@ -36,6 +36,6 @@ setup(name='edafa',
 	test_suite='nose.collector',
 	tests_require=['nose'],
 	install_requires=[
-	'numpy', 'tifffile', 'opencv-python' 
+	'numpy', 'opencv-python' 
 	],
         zip_safe=False)

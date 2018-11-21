@@ -99,7 +99,8 @@ class BasePredictor(ABC):
 		
 		:returns: a set of augmentations of original image
 		"""
-		aug_patch = np.zeros((len(self.augs),*img.shape),dtype=img.dtype)
+		shp = img.shape
+		aug_patch = np.zeros((len(self.augs),*shp),dtype=img.dtype)
 		for i,aug in enumerate(self.augs):
 			aug_patch[i] = apply(aug,img,self.bits)
 		return aug_patch
