@@ -60,7 +60,7 @@ Configuration file is a json file containing two pieces of information
 	* **GEO** : Geometric mean
 3. Number of bits image (default is 8-bits) (**bits**).
 
-Example of a conf file
+Example of a conf file in `json` format
 ```json
 {
 "augs":["NO",
@@ -69,8 +69,15 @@ Example of a conf file
 "mean":"ARITH",
 "bits":8
 }
+
 ```
-You can either pass file path or the actual json text to `conf` parameter.
+Example of a conf file in `yaml` format
+```yaml
+augs: [NO,FLIP_UD,FLIP_LR]
+mean: ARITH
+bits: 8
+```
+You can either pass file path (json or yaml) or the actual json text to `conf` parameter.
 
 ## Contribution
 All contributions are welcomed. Please make sure that all tests passed before pull request. To run tests
