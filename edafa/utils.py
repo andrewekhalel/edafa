@@ -1,7 +1,9 @@
+from __future__ import absolute_import
 import cv2
 import math
 import numpy as np
-
+import ruamel.yaml as yaml
+import json
 
 # EXTENSIONS = ['jpg','png','tif','tiff']
 AUGS = ['NO','ROT90','ROT180','ROT270','FLIP_UD','FLIP_LR','BRIGHT','CONTRAST','GAUSSIAN', 'GAMMA']
@@ -239,3 +241,24 @@ def reverse(aug,img):
 		return img
 	elif aug == "GAMMA":
 		return img
+
+def conf_to_dict(conf):
+	result = None
+	# json string?
+	try:
+		result = json.loads(conf)
+	except:
+		# json file?
+		try:	
+			with open(conf) as f:
+				result =  json.load(f)
+		except:
+			# yaml file?
+			try:
+				with open(conf) as stream:
+					result = yaml.safe_load(stream)
+			except:
+				pass
+	return result
+
+	

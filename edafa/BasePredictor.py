@@ -4,8 +4,8 @@ from .utils import *
 from .exceptions import *
 import numpy as np
 from abc import ABC, abstractmethod
-import json
 import warnings
+
 
 class BasePredictor(ABC):
 	"""
@@ -61,11 +61,9 @@ class BasePredictor(ABC):
 
 		:param conf: configuration (json string or file path)
 		"""
-		try:
-			loaded = json.loads(conf)
-		except:
-			with open(conf) as f:
-				loaded = json.load(f)
+		loaded = conf_to_dict(conf)
+		if loaded is None:
+			raise ConfigurationUnrecognized("Unrecognized configuration!")
 
 		if "augs" in  loaded:
 			self.augs = loaded["augs"]

@@ -19,7 +19,7 @@ class LogisticsTester(TestCase):
 
 	def test_pass_json_file(self):
 		"""
-		Test configuration file loading
+		Test json configuration file loading
 		"""
 		p = Child(os.path.join(self.path,"conf/pascal_voc.json"))
 		self.assertTrue(p.augs == ["NO",
@@ -27,6 +27,18 @@ class LogisticsTester(TestCase):
 									"FLIP_LR"])
 		self.assertTrue(p.mean == "ARITH")
 		self.assertTrue(p.bits == 8)
+
+	def test_pass_yaml_file(self):
+		"""
+		Test yaml configuration file loading
+		"""
+		p = Child(os.path.join(self.path,"conf/pascal_voc.yaml"))
+		self.assertTrue(p.augs == ["NO",
+									"FLIP_UD",
+									"FLIP_LR"])
+		self.assertTrue(p.mean == "ARITH")
+		self.assertTrue(p.bits == 8)
+
 
 	def test_pass_json_string(self):
 		"""
