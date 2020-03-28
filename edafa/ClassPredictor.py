@@ -1,4 +1,5 @@
 from .BasePredictor import BasePredictor
+from .exceptions import UnsupportedDataType
 import numpy as np
 
 class ClassPredictor(BasePredictor):
@@ -18,11 +19,26 @@ class ClassPredictor(BasePredictor):
 		
 		:returns: single combined patch 
 		"""
-		if self.mean == "ARITH":
-			return np.mean(aug_patch,axis=0)
-		elif self.mean == "GEO":
-			product = np.prod(aug_patch,axis=0)
-			return processed ** (1./len(self.augs))
+		if isinstance(aug_patch,np.ndarray):
+			if self.mean == "ARITH":
+				return np.mean(aug_patch,axis=0)
+			elif self.mean == "GEO":
+				product = np.prod(aug_patch,axis=0)
+				return product ** (1./len(self.augs))
+		elif isinstance(aug_patch,list):
+			try:
+				aug_patch = np.array(aug_patch)
+				return np.mean(aug_patch,axis=0)
+			except:	
+				averaged = []			
+				for output in aug_patch:
+					averaged.append([sum(e)/len(e) for e in zip(*output)])
+				return averaged
+				
+		else:
+			raise UnsupportedDataType('Data type "%s" produced by your model is not supported.\
+										list and numpy arrays are the only supported types.'%aug_patch.dtype)
+
 
 	def _predict_single(self,img):
 		"""

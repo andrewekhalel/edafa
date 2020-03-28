@@ -174,6 +174,3 @@ class AugTester(TestCase):
 		axarr[0].imshow(img[...,::-1])
 		axarr[1].imshow(p.predict_images([img])[0][...,::-1].astype(np.uint8))
 		plt.show()
-
-if __name__ == '__main__':
-    unittest.main()

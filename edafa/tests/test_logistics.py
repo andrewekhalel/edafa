@@ -108,7 +108,7 @@ class LogisticsTester(TestCase):
 		
 		# TODO: replace Exception with AugmentationUnrecognized
 		with self.assertRaises(Exception):
-			p = Child(conf)
+			_ = Child(conf)
 
 	def test_pass_invalid_mean(self):
 		"""
@@ -120,8 +120,4 @@ class LogisticsTester(TestCase):
 
 		# TODO: replace Exception with MeanUnrecognized
 		with self.assertRaises(Exception):
-			p = Child(conf)
-
-
-if __name__ == '__main__':
-    unittest.main()
+			_ = Child(conf)

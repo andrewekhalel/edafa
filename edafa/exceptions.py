@@ -1,3 +1,9 @@
+class UnsupportedDataType(Exception):
+	"""
+	An exception to indicate data type is unsupported
+	"""
+	def __init__(self, message):
+		self.message = message
 
 class AugmentationUnrecognized(Exception):
 	"""
