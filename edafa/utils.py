@@ -2,7 +2,7 @@ from __future__ import absolute_import
 import cv2
 import math
 import numpy as np
-import ruamel.yaml as yaml
+import yaml
 import json
 
 # EXTENSIONS = ['jpg','png','tif','tiff']
@@ -256,7 +256,7 @@ def conf_to_dict(conf):
 			# yaml file?
 			try:
 				with open(conf) as stream:
-					result = yaml.safe_load(stream)
+					result = yaml.full_load(stream)
 			except:
 				pass
 	return result
